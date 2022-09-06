@@ -12,7 +12,6 @@ const Total = ({exercises}) => {
     )
 }
 
-
 const App = () => {
   const course = {
       name: 'Half Stack application development',
@@ -31,6 +30,7 @@ const App = () => {
         }
       ]
     }
+    
   return (
       <div>
           <Header course={course.name}/>
