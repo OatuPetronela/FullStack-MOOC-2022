@@ -41,4 +41,4 @@ Course material available at https://fullstackopen.com/
  - ✅ 2.8
  - ✅ 2.9
  - ✅ 2.10
-
+ - ✅ 2.11
