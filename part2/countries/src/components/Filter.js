@@ -1,5 +1,6 @@
 import CountryInfo from './CountryInfo'
 
+
 const Filter = ({countries, setFilterCountry, filterCountry}) => {
     const filterName = countries.filter(country => country.name.toLowerCase().includes(filterCountry.toLowerCase()));
 

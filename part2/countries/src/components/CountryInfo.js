@@ -1,3 +1,5 @@
+import Weather from './Weather'
+
 const CountryInfo = ({filterName}) => {
     return (
         <div>
@@ -18,6 +20,7 @@ const CountryInfo = ({filterName}) => {
                 width="250"
                 height="200"
                 alt={`Flag of ${filterName.name}`}/>
+                <Weather name={filterName.name} />
         </div>
     )
 }
