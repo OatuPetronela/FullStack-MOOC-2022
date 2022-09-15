@@ -18,7 +18,7 @@ function App() {
 
     return (
         <div>
-            <p>Find countries <input onChange={handleFilter} value={filterCountry}/></p>
+            <p>Find countries <input onChange={handleFilter} value={filterCountry}/></p>-gi
             <Filter filterCountry={filterCountry} setFilterCountry={setFilterCountry} countries={countries}/>
         </div>
     );

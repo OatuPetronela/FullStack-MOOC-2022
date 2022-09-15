@@ -1,4 +1,4 @@
-const Persons=({filter, persons, filteredPersons})=>{
+const PersonsList=({filter, persons, filteredPersons})=>{
     return(
         <ol>
         {filter === ""
@@ -11,4 +11,4 @@ const Persons=({filter, persons, filteredPersons})=>{
         </ol>  
     )
 }
-export default Persons;
+export default PersonsList;

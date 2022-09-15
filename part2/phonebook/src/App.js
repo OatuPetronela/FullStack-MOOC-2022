@@ -1,38 +1,42 @@
-import {useState, useEffect} from 'react'
+import React, {useState, useEffect} from 'react'
 import PersonForm from './components/PersonForm'
-import Persons from './components/Persons'
+import PersonsList from './components/PersonsList'
 import Filter from './components/Filter'
-import axios from 'axios';
+import personsService from './services/persons'
 
 const App = () => {
-    const [persons,setPersons] = useState([])
+    const [persons, setPersons] = useState([])
     const [newName, setNewName] = useState('')
     const [newNumber, setNewNumber] = useState('')
     const [filter, setFilter] = useState('')
-    const [filteredPersons, setFilteredPersons] = useState(null);
+    const [filteredPersons,setFilteredPersons] = useState(null);
 
-    useEffect(()=>{
-        axios.get("http://localhost:3001/persons").then(response=>{
-           setPersons(response.data)
-        })
-    },[])
+    useEffect(() => {
+        personsService
+            .getPersons()
+            .then(response => {
+                setPersons(response)
+            })
+    }, [])
 
     const addPerson = (e) => {
         e.preventDefault()
         const objectPerson = {
-            id: persons.length + 1,
             name: newName,
             number: newNumber
         }
+        personsService
+            .createPersons(objectPerson)
+            .then(response => {
+                setPersons(persons.concat(response))
+                setNewName('')
+                setNewNumber('')
+                const existName = persons.some(person => person.name === newName);
+                if (existName) {
+                    alert(`${newName} is already added to phonebook`)
+                }
+            })
 
-        setPersons(persons.concat(objectPerson))
-        setNewName('')
-        setNewNumber('')
-
-        const existName = persons.some(person => person.name === newName);
-        if (existName) {
-            alert(`${newName} is already added to phonebook`)
-        }
     }
 
     const handleNameChange = (e) => {
@@ -61,7 +65,10 @@ const App = () => {
                 newNumber={newNumber}
                 handleNumberChange={handleNumberChange}/>
             <h3>List of persons</h3>
-            <Persons filter={filter} persons={persons} filteredPersons={filteredPersons}/>
+            <PersonsList
+                filter={filter}
+                persons={persons}
+                filteredPersons={filteredPersons}/>
         </div>
     )
 }
