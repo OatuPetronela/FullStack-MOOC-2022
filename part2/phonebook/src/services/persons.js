@@ -6,10 +6,14 @@ const getPersons = () => {
     const request = axios.get(baseUrl)
     return request.then(response => response.data)
 }
+const update = (id, objectPerson) => {
+    const request = axios.put(`${baseUrl}/${id}`, objectPerson)
+    return request.then(response => response.data)
+  }
 
 const createPersons = (objectPerson) => {
     const request = axios.post(baseUrl, objectPerson);
     return request.then(response => response.data)
 }
 
-export default {getPersons, createPersons}
+export default {getPersons, update, createPersons}

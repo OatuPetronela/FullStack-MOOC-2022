@@ -2,22 +2,37 @@ import React, {useState, useEffect} from 'react'
 import PersonForm from './components/PersonForm'
 import PersonsList from './components/PersonsList'
 import Filter from './components/Filter'
+import Person  from './components/Person'
 import personsService from './services/persons'
+
 
 const App = () => {
     const [persons, setPersons] = useState([])
     const [newName, setNewName] = useState('')
     const [newNumber, setNewNumber] = useState('')
     const [filter, setFilter] = useState('')
-    const [filteredPersons,setFilteredPersons] = useState(null);
+    const [filteredPersons, setFilteredPersons] = useState(null);
 
     useEffect(() => {
         personsService
             .getPersons()
-            .then(response => {
-                setPersons(response)
+            .then(initialPersons => {
+                setPersons(initialPersons)
             })
     }, [])
+
+    const toggleImportanceOf = (id) => {
+        const person = persons.find(p => p.id === id)
+        const changedPerson = {...person,important: !person.important}
+
+        personsService
+            .update(id, changedPerson)
+            .then(returnedPerson => {
+                setPersons(persons.map(person => person.id !== id
+                    ? person
+                    : returnedPerson))
+            })
+    }
 
     const addPerson = (e) => {
         e.preventDefault()
@@ -25,10 +40,11 @@ const App = () => {
             name: newName,
             number: newNumber
         }
+
         personsService
             .createPersons(objectPerson)
-            .then(response => {
-                setPersons(persons.concat(response))
+            .then(returnedNote => {
+                setPersons(persons.concat(returnedNote))
                 setNewName('')
                 setNewNumber('')
                 const existName = persons.some(person => person.name === newName);
@@ -65,6 +81,17 @@ const App = () => {
                 newNumber={newNumber}
                 handleNumberChange={handleNumberChange}/>
             <h3>List of persons</h3>
+            <div>
+                <button onClick={() => setPersons(!persons)}>
+                    show {persons
+                        ? 'important'
+                        : 'all'}
+            </button>
+                <ul>
+                    {persons.map(person =>
+                    <Person key={person.id} person={person} toggleImportance={() => toggleImportanceOf(person.id)}/>)}
+                </ul>
+            </div>
             <PersonsList
                 filter={filter}
                 persons={persons}
@@ -73,4 +100,4 @@ const App = () => {
     )
 }
 
-export default App
+export default App;
