@@ -1,8 +1,7 @@
 import React, {useState, useEffect} from 'react'
 import PersonForm from './components/PersonForm'
-import PersonsList from './components/PersonsList'
 import Filter from './components/Filter'
-import Person  from './components/Person'
+import GetNames from './components/GetName'
 import personsService from './services/persons'
 
 
@@ -11,7 +10,6 @@ const App = () => {
     const [newName, setNewName] = useState('')
     const [newNumber, setNewNumber] = useState('')
     const [filter, setFilter] = useState('')
-    const [filteredPersons, setFilteredPersons] = useState(null);
 
     useEffect(() => {
         personsService
@@ -21,53 +19,58 @@ const App = () => {
             })
     }, [])
 
-    const toggleImportanceOf = (id) => {
-        const person = persons.find(p => p.id === id)
-        const changedPerson = {...person,important: !person.important}
-
-        personsService
-            .update(id, changedPerson)
-            .then(returnedPerson => {
-                setPersons(persons.map(person => person.id !== id
-                    ? person
-                    : returnedPerson))
-            })
+    const checkName = (newName) => {
+        let matchFound = false;
+        persons.forEach((person) => {
+            if (person.name === newName) {
+                matchFound = true;
+            }
+        })
+        return matchFound
     }
 
     const addPerson = (e) => {
         e.preventDefault()
-        const objectPerson = {
-            name: newName,
-            number: newNumber
+        if (checkName(newName)) {
+            if (window.confirm(`${newName} is already added to phonebook`)) {
+                const person = persons.find(person => person.name === newName)
+                const changedPerson = {...person,number: newNumber}
+                personsService
+                    .update(changedPerson.id, changedPerson)
+                    .then(returnedPerson => {
+                        setPersons(persons.map(person => person.id !== changedPerson.id
+                            ? person
+                            : returnedPerson))
+                    })
+            }
+        } else {
+            const objectPerson = {
+                name: newName,
+                number: newNumber
+            }
+
+            personsService
+                .createPersons(objectPerson)
+                .then(returnedPerson => {
+                    setPersons(persons.concat(returnedPerson))
+                    setNewName('')
+                    setNewNumber('')
+                })
         }
-
-        personsService
-            .createPersons(objectPerson)
-            .then(returnedNote => {
-                setPersons(persons.concat(returnedNote))
-                setNewName('')
-                setNewNumber('')
-                const existName = persons.some(person => person.name === newName);
-                if (existName) {
-                    alert(`${newName} is already added to phonebook`)
-                }
-            })
-
+    }
+    const removePerson = (id, name) => {
+        if (window.confirm(`Do you really want to delete ${name}?`)) {
+            personsService
+                .deletePerson(id)
+                .then(setPersons(persons.filter(person => person.id !== id)))
+        }
     }
 
-    const handleNameChange = (e) => {
-        setNewName(e.target.value)
-    }
+    const handleNameChange = (e) => { setNewName(e.target.value) }
 
-    const handleNumberChange = (e) => {
-        setNewNumber(e.target.value)
-    }
+    const handleNumberChange = (e) => { setNewNumber(e.target.value) }
 
-    const handleFilter = (e) => {
-        setFilter(e.target.value)
-        const filtered = persons.filter((person) => person.name.toLowerCase().includes(e.target.value.toLowerCase()));
-        setFilteredPersons(filtered);
-    }
+    const handleFilter = (e) => { setFilter(e.target.value) }
 
     return (
         <div>
@@ -81,21 +84,7 @@ const App = () => {
                 newNumber={newNumber}
                 handleNumberChange={handleNumberChange}/>
             <h3>List of persons</h3>
-            <div>
-                <button onClick={() => setPersons(!persons)}>
-                    show {persons
-                        ? 'important'
-                        : 'all'}
-            </button>
-                <ul>
-                    {persons.map(person =>
-                    <Person key={person.id} person={person} toggleImportance={() => toggleImportanceOf(person.id)}/>)}
-                </ul>
-            </div>
-            <PersonsList
-                filter={filter}
-                persons={persons}
-                filteredPersons={filteredPersons}/>
+            <GetNames persons={persons} filter={filter} removePerson={removePerson}/>
         </div>
     )
 }

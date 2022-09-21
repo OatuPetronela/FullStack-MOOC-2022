@@ -10,24 +10,19 @@
       "name": "Ada Lovelace",
       "number": "39-44-5323523",
       "id": 2,
-      "important": false
+      "important": true
     },
     {
       "name": "Dan Abramov",
       "number": "12-43-234345",
       "id": 3,
-      "important": false
+      "important": true
     },
     {
       "name": "Mary Poppendieck",
       "number": "39-23-6423122",
       "id": 4,
       "important": true
-    },
-    {
-      "name": "Roberto",
-      "number": "0746-234-345",
-      "id": 5
     }
   ]
 }
