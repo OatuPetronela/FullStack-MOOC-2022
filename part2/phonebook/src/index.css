@@ -1,0 +1,42 @@
+.title {
+    color: green;
+    font-style:inherit;
+    font-size: 30px;
+    text-align: center;
+    text-transform:uppercase;
+    letter-spacing: 3px;
+  }
+
+ .inputForm{
+  margin: 3px;
+  padding: 3px;
+  border: 1px solid black;
+  border-radius: 3px;
+  background-color: whitesmoke;
+ }
+
+ .btnAddPerson{
+    margin: 20px;
+    padding: 2px;
+    border: 2px solid green;
+    border-radius: 3px;
+    background-color: greenyellow;
+    font-size: 12px;
+ }
+
+ .btnAddPerson:hover{
+    background-color: green;
+ }
+
+.btnDeletePerson{
+    margin: 5px;
+    padding: 2px;
+    background-color: red;
+    border: 1px solid black;
+    border-radius: 3px;
+}
+
+.list{
+    font-size: 20px;
+    margin: 10px;
+}

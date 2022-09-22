@@ -1,16 +1,16 @@
 import React from 'react'
 
 const Contact = ( props ) => {
-    return <>{props.name} {props.number} <button onClick={() => props.removePerson(props.personId, props.name)}>delete</button> <br /></>
+    return <li><span className="list">{props.name} {props.number}</span><button onClick={() => props.removePerson(props.personId, props.name)} className="btnDeletePerson">delete</button><br/></li>
 }
 
 const GetNames = ({ persons, filter, removePerson}) => {
     if (filter.length === 0) {
-        return persons.map(i => <Contact personId={i.id} name={i.name} number={i.number} key={i.name} removePerson={removePerson} />)
+        return persons.map(person => <Contact personId={person.id} name={person.name} number={person.number} key={person.name} removePerson={removePerson} />)
     }
     else {
-        let filtered = persons.filter(i => i.name.toLowerCase().includes(filter.toLowerCase()))
-        return filtered.map(i => <Contact personId={i.id} name={i.name} number={i.number} key={i.name} removePerson={removePerson} />)
+        let filtered = persons.filter(person => person.name.toLowerCase().includes(filter.toLowerCase()))
+        return filtered.map(person => <Contact personId={person.id} name={person.name} number={person.number} key={person.name} removePerson={removePerson} />)
     }
 }
 
