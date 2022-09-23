@@ -19,6 +19,7 @@ const App = () => {
     const [message, setMessage] = useState(null)
     const [errorMessage, setErrorMessage] = useState(false)
 
+
     useEffect(() => {
         personsService
             .getPersons()
@@ -26,7 +27,6 @@ const App = () => {
                 setPersons(initialPersons)
             })
     }, [])
-
     const checkName = (newName) => {
         let matchFound = false;
         persons.forEach((person) => {
@@ -46,6 +46,7 @@ const App = () => {
                 personsService
                     .update(changedPerson.id, changedPerson)
                     .then(returnedPerson => {
+                        console.log(returnedPerson)
                         setPersons(persons.map(person => person.id !== changedPerson.id
                             ? person
                             : returnedPerson))

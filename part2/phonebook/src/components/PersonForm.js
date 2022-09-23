@@ -4,11 +4,11 @@ return(
     <div>
         <label>Name</label>
         <br/>
-       <input className='inputForm' value={newName} onChange={handleNameChange} placeholder="name..." required/>
+       <input className='inputForm' type="text" value={newName} onChange={handleNameChange} placeholder="name..." required/>
         <br/>
         <label>Number</label>
         <br/>
-        <input className='inputForm'  value={newNumber} onChange={handleNumberChange} placeholder="number..." required/>
+        <input className='inputForm' type="number"  value={newNumber} onChange={handleNumberChange} placeholder="number..." required/>
     </div>
     <div>
         <button type="submit" className="btnAddPerson">Add new person</button>
