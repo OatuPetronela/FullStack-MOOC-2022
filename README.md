@@ -52,3 +52,8 @@ Course material available at https://fullstackopen.com/
  - ✅ 2.19
  - ✅ 2.20
  
+ Part 3: Programming a server with NodeJS and Express
+ - ✅ 3.1
+ - ✅ 3.2
+ - ✅ 3.3
+ - ✅ 3.4
