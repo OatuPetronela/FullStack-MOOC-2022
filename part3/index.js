@@ -67,6 +67,7 @@ app.post("/api/persons", (req, res) => {
         id: generateId()
     }
     console.log(person)
+    debugger;
     persons = persons.concat(person)
     res.json(person)
 })
