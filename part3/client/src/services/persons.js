@@ -20,4 +20,4 @@ const deletePerson = (personId) => {
     return request.then(response => response.data)
 }
 
-export default {getPersons, update, deletePerson, createPersons}
+export default {getPersons, update, createPersons, deletePerson}
