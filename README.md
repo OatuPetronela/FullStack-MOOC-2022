@@ -68,3 +68,4 @@ Course material available at https://fullstackopen.com/
  Part 4: Testing Express servers, user administration
   - ✅ 4.1
   - ✅ 4.2
+  - ✅ 4.3
